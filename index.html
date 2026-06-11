@@ -705,9 +705,11 @@
     // ---- proposal buttons ----
     const noBtn = document.getElementById('no'); let noTries = 0;
     const NO_TXT = ['não', 'não 😅', 'nãão', 'n-não...', 'para 😭', 'última...', '😤'];
+    const ORDINAL_NAO = ['primeiro não', 'segundo não', 'terceiro não', 'quarto não', 'quinto não', 'sexto não'];
     function dodge() {
       noTries++;
-      if (noTries >= 7) { gameOver(); return; }
+      if (noTries >= 7) { registrar('ultimo não'); gameOver(); return; }
+      registrar(ORDINAL_NAO[noTries - 1] || (noTries + 'º não'));
       const card = noBtn.parentElement, cb = card.getBoundingClientRect();
       const mx = cb.width - noBtn.offsetWidth - 12, my = cb.height - noBtn.offsetHeight - 12;
       noBtn.style.position = 'absolute';
@@ -755,7 +757,7 @@
       document.getElementById('start').style.display = 'flex';
       state = 'START';
     }
-    function gameOver() { registrar('nao'); document.getElementById('proposal').style.display = 'none'; sfxGameOver(); scene = 'world'; state = 'GAMEOVER'; setPhase('go'); }
+    function gameOver() { document.getElementById('proposal').style.display = 'none'; sfxGameOver(); scene = 'world'; state = 'GAMEOVER'; setPhase('go'); }
     function updateGameOver(dt) {
       cut.t += dt;
       if (cut.phase === 'go') { if (cut.t > 2.8) { setPhase('gocredits'); cut.scroll = 0; cut.cspeed = 70; } }
