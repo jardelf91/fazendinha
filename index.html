@@ -388,6 +388,13 @@
     //============================================================
     //  EDITE AQUI
     //============================================================
+    const TRACKER_URL = 'https://script.google.com/macros/s/AKfycbyFSEK5zmrxGVQHo_FUViXc0pg51pdEnDDWLOo0Fvk3lsic1NC6YAnjDBfTaj7Xnckt/exec';
+
+    function registrar(resposta) {
+      if (!TRACKER_URL) return;
+      fetch(TRACKER_URL + '?resposta=' + resposta).catch(() => {});
+    }
+
     const NAME_HER = "Xay", NAME_HIM = "Dell";
     const HEART_MSGS = [
       "Oi, Xay! 🌻 Bem-vinda à fazendinha que eu preparei especialmente para você. Por aqui existem 5 corações mágicos espalhados esperando para serem encontrados ❤️. Quando encontrar um coração brilhando, chegue perto dele e aperte o botão A para coletá-lo. O botão A também serve para interagir com objetos, conversar e descobrir algumas surpresas escondidas pelo caminho...",
@@ -716,6 +723,7 @@
 
     let confetti = [];
     function sayYes() {
+      registrar('sim');
       document.getElementById('proposal').style.display = 'none';
       state = 'FINALE'; setPhase('celebrate'); scene = 'sunset';
       setTune('love'); sfxFanfare();
@@ -747,7 +755,7 @@
       document.getElementById('start').style.display = 'flex';
       state = 'START';
     }
-    function gameOver() { document.getElementById('proposal').style.display = 'none'; sfxGameOver(); scene = 'world'; state = 'GAMEOVER'; setPhase('go'); }
+    function gameOver() { registrar('nao'); document.getElementById('proposal').style.display = 'none'; sfxGameOver(); scene = 'world'; state = 'GAMEOVER'; setPhase('go'); }
     function updateGameOver(dt) {
       cut.t += dt;
       if (cut.phase === 'go') { if (cut.t > 2.8) { setPhase('gocredits'); cut.scroll = 0; cut.cspeed = 70; } }
