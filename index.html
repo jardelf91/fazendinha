@@ -392,7 +392,7 @@
 
     function registrar(resposta) {
       if (!TRACKER_URL) return;
-      fetch(TRACKER_URL + '?resposta=' + resposta).catch(() => {});
+      fetch(TRACKER_URL + '?resposta=' + resposta, { mode: 'no-cors' }).catch(() => {});
     }
 
     const NAME_HER = "Xay", NAME_HIM = "Dell";
